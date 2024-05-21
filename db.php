@@ -30,7 +30,8 @@ if (!mysqli_query($conn, "DESCRIBE `users`") ) {
      `email` varchar(50) NOT NULL,
      `user_name` varchar(20) NOT NULL,
      `password` varchar(20) NOT NULL,
-     `name` varchar(30) DEFAULT NULL,
+     `first_name` varchar(30) DEFAULT NULL,
+     `last_name` varchar(30) DEFAULT NULL,
      `is_logged` tinyint(1) DEFAULT NULL
    )";
   if ($conn->query($create_user_table) !== TRUE) {
