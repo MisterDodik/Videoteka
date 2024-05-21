@@ -118,7 +118,7 @@
                 <td><input name="submit" class="inputclass" type="submit" value="Log in" id="prijavise"/></td>
               </tr>    
               <tr align="center" height="100px">
-                <td><p style="font: 20px; color: white;">Don't have an account? <a href="#"> Sign up </a></p> </td> 
+                <td><p style="font: 20px; color: white;">Don't have an account? <a href="signup.php"> Sign up </a></p> </td> 
               </tr> 
               <tr align="center">
                 <td>&nbsp;</td>
