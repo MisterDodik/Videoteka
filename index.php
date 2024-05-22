@@ -22,54 +22,75 @@
     <body>
     
     <?php 
-    $msg_index=0;
-        if(isset($_POST["submit"])){
-            $email_user=$_POST["email_user"];
-            $pass=$_POST["pass"];
-                
-            if(strlen($email_user)>0 || strlen($pass)>0){   //ako je neko od polja prazno onda preskace svako ispitivanje
-                include('db.php');
-                $result = mysqli_query($conn,"SELECT * FROM users");
-                
-                $emails=array();
-                $usernames=array();
-                $passwords=array();
-                while($row = mysqli_fetch_array($result)){
-                    $emails[]= $row['email'];
-                    $usernames[]= $row['user_name'];
-                    $passwords[]= $row['password'];
-                } 
-                
-                if(count($emails)>0){   //ako je prazna tabela users onda znaci da uneseni podaci ne postoje
-                    if (str_contains($email_user, "@")) {
-                        if ($passwords[array_search($email_user, $emails)]==$pass){
-                            echo "da @";
-                        }
-                        else {
-                            $msg_index=2;
-                            # echo "<h3>Niste unijeli postojece podatke</h3>";
-                            }
-                    } 
-                    else {
-                        if ($passwords[array_search($email_user, $usernames)]==$pass){
-                            echo $email_user.array_search($email_user, $usernames).$pass."</br>";
-                        }
-                        else {
-                            $msg_index=2;
-                            # echo "<h3>Niste unijeli postojece podatke</h3>";
-                            }
-                    }	
+      function search($arr1, $arr2, $user){
+        for($i=0; $i<count($arr1); $i++){
+          if($arr1[$i]==$user || $arr2[$i]==$user)
+            return $i;
+        }
+        return -1;
+      }
+
+      $msg_index=0;
+      if(isset($_POST["submit"])){
+          $email_user=$_POST["email_user"];
+          $pass=$_POST["pass"];
+              
+          if(strlen($email_user)>0 && strlen($pass)>0){   //ako je neko od polja prazno onda preskace svako ispitivanje
+              include('db.php');
+              $result = mysqli_query($conn,"SELECT * FROM users");
+              
+              $emails=array();
+              $usernames=array();
+              $passwords=array();
+              while($row = mysqli_fetch_array($result)){
+                  $emails[]= $row['email'];
+                  $usernames[]= $row['user_name'];
+                  $passwords[]= $row['password'];
+              } 
+              // echo "email_user: ".$email_user." password: $pass";
+              // echo "<br/>";
+              // echo array_search($email_user, $usernames), $passwords[array_search($email_user, $usernames)];
+              
+              if(count($emails)>0){   //ako je prazna tabela users onda znaci da uneseni podaci ne postoje
+                  
+                if (search($usernames, $emails, $email_user)===-1){
+                    $msg_index=2;
+                    #echo "<h3>Niste unijeli ispravne podatke</h3>";
                 }
                 else {
-                    $msg_index=2;
-                    # echo "<h3>Niste unijeli postojece podatke</h3>";
+                    if (str_contains($email_user, "@")) {
+                        if ($passwords[array_search($email_user, $emails)]===$pass){
+                            header("Location: home.php");
+                            exit();		
+                        }
+                        else {
+                            $msg_index=2;
+                            # echo "<h3>Niste unijeli postojece podatke</h3>";
+                            }
+                      } 
+                      else {
+                          if ($passwords[array_search($email_user, $usernames)]===$pass){
+                              header("Location: home.php");
+					                    exit();		
+                          }
+                          else {
+                              $msg_index=2;
+                              # echo "<h3>Niste unijeli postojece podatke</h3>";
+                              }
+                      }	
                 }
-            }
-            else{
-                $msg_index=1;
-                # echo "<h3>Niste unijeli podatke</h3>";
-            }
-        }
+                
+              }
+              else {
+                  $msg_index=2;
+                  # echo "<h3>Niste unijeli postojece podatke</h3>";
+              }
+          }
+          else{
+              $msg_index=1;
+              # echo "<h3>Niste unijeli podatke</h3>";
+          }
+      }
     ?>
 
 
