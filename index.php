@@ -22,9 +22,9 @@
     <body>
     
     <?php 
-      function search($arr1, $arr2, $user){
-        for($i=0; $i<count($arr1); $i++){
-          if($arr1[$i]==$user || $arr2[$i]==$user)
+      function search($arr1, $arr2, $user){         //ovo je da vidi da li je username ili email uopste u bazi
+        for($i=0; $i<count($arr1); $i++){           //in-built array_search ne returna nista ako ne nadje nista
+          if($arr1[$i]==$user || $arr2[$i]==$user)  //pa sam napravio ovo da lakse bude ispitivanje
             return $i;
         }
         return -1;
@@ -47,13 +47,10 @@
                   $usernames[]= $row['user_name'];
                   $passwords[]= $row['password'];
               } 
-              // echo "email_user: ".$email_user." password: $pass";
-              // echo "<br/>";
-              // echo array_search($email_user, $usernames), $passwords[array_search($email_user, $usernames)];
               
               if(count($emails)>0){   //ako je prazna tabela users onda znaci da uneseni podaci ne postoje
                   
-                if (search($usernames, $emails, $email_user)===-1){
+                if (search($usernames, $emails, $email_user)===-1){  //ovaj search je moja funkcija
                     $msg_index=2;
                     #echo "<h3>Niste unijeli ispravne podatke</h3>";
                 }
