@@ -13,13 +13,16 @@ function find(query_text){
 	.then(data => {
 	console.log('Response data:', data);
 	const list= data.titleResults.results; 
-	list.map((item)=>{
-	const name= item.titleNameText;
-	const poster= item.titlePosterImageModel.url;
 	
-	//makes button for each found movie
-	const movie= `<li><button id="${item.id}" class="movieclass"> <img src="${poster}"> <h2>${name}</h2> </button></li>`;
-	document.querySelector('.movies').innerHTML+=movie;
+	var movies = document.querySelector('.movies');
+	movies.innerHTML = "";
+
+	list.map((item)=>{
+		const name= item.titleNameText;
+		const poster= item.titlePosterImageModel.url;
+		//makes button for each found movie
+		const movie= `<li><button id="${item.id}" class="movieclass"> <img src="${poster}"> <h2>${name}</h2> </button></li>`;
+		movies.innerHTML+=movie;
 	})
 	})
 	.catch(err => {
@@ -102,13 +105,6 @@ async function get_info(id) {
     };
 
     return data;
-}
-
-
-
-
-function pusiga(text){
-
 }
 
 function send_data(button_id, poster, name){
