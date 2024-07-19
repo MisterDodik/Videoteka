@@ -81,8 +81,6 @@ function changePage(page)
 }
 function paginate(){
     for(var i=1; i<numPages()+1; i++){
-        console.log("caosdfjasodfjasodfas");
-
         const number=`<div class="page_container"><a href="javascript:changePage(${i})" id="page_num">${i}</a></div> `;
         document.querySelector('.pagination').innerHTML+=number;
     }
